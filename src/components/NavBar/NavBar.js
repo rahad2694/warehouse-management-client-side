@@ -7,12 +7,12 @@ const NavBar = () => {
     const [user] = useAuthState(auth);
     return (
 
-        <div className="w-60 h-full shadow-md bg-white absolute" id="sidenavSecExample">
+        <div className="w-50 h-full shadow-md bg-white absolute" id="sidenavSecExample">
             <div className="pt-4 pb-2 px-6">
                 <a href="#!">
                     <div className="flex items-center">
                         <div className="shrink-0 ">
-                            <img data-bs-toggle="modal" data-bs-target="#exampleModal" src={user?.photoURL} className="rounded-full hover:scale-110 w-10" alt="Avatar"/>
+                            <img data-bs-toggle="modal" data-bs-target="#exampleModal" src={user?.uid? user.photoURL:'https://i.ibb.co/R6RkCG6/blank-user.jpg'} className="rounded-full hover:scale-110 w-10" alt="Avatar"/>
                         </div>
                         <div className="grow ml-3">
                             <Modal></Modal>

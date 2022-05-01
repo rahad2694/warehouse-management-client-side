@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
-import Login from './Login/Login';
 
 function App() {
   return (

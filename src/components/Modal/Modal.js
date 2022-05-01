@@ -30,8 +30,12 @@ const Modal = () => {
                         <div className="modal-body ">
                             <div>
                                 {!user?.uid ? <Login></Login> : <div>
-                                    <h1>User info</h1>
-                                    <button onClick={() => signOut(auth)} type="button" className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Log Out</button>
+                                    <div className='flex justify-center my-3'>
+                                        <img className='max-w-xs rounded-full hover:scale-110 transition duration-300 ease-out' src={user.photoURL} alt="" />
+                                    </div>
+                                    <h2>{user.email}</h2>
+                                    <h3 className={`${user.emailVerified?'text-green-500':'text-red-500'}`}>{user.emailVerified?'Email Verified':'Email Not Verified'}</h3>
+                                    <button onClick={() => signOut(auth)} type="button" className="px-6 mt-6 mb-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Log Out</button>
                                 </div>}
                             </div>
                         </div>
