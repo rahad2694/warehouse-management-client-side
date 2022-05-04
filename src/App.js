@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 
@@ -11,6 +12,7 @@ function App() {
         <Route path='/'>
         </Route>
       </Routes> */}
+      <Toaster />
     </div>
   );
 }

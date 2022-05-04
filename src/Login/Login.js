@@ -1,84 +1,73 @@
 import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
 import { useAuthState, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import RoundSpinner from '../components/RoundSpinner/RoundSpinner';
 import auth from '../firebase.init';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [notRegistered, setNotRegistered] = useState(false);
+
+    const { register, handleSubmit } = useForm();
+    const onSubmit = (data,e) => {
+        if(!notRegistered){
+            delete data.name;
+        }
+        console.log(data);
+        e.target.reset();
+    };
+
     const [signInWithGithub, gitUser, gitLoading, gitError] = useSignInWithGithub(auth);
     const [user] = useAuthState(auth);
-    if(googleLoading || gitLoading){
+    if (googleLoading || gitLoading) {
         return <RoundSpinner></RoundSpinner>
     }
+    if(googleError || gitError){
+        toast.error('Unsuccessful Attempt! Try Again..!',{id:'unsuccessful'})
+    }
     console.log(user);
-    console.log(notRegistered);
+    // console.log(notRegistered);
     return (
         <div>
             <section>
                 <div className="container p-6 h-full">
-                    <div className="md:w-8/12 lg:w-5/12 mx-auto text-gray-800">
+                    <div className="md:w-8/12 lg:w-5/12 mx-auto ">
                         <div className='mx-auto'>
-                            {/* -- Name input -- */}
-                            <div className="mb-6">
-                                <input
-                                    type="text"
-                                    name='name'
-                                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Your Name"
-                                />
-                            </div>
-                            {/* -- Email input --*/}
-                            <div className="mb-6">
-                                <input
-                                    type="text"
-                                    name='email'
-                                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Email address"
-                                />
-                            </div>
 
-                            {/* <!-- Password input --> */}
-                            <div className="mb-6">
-                                <input
-                                    type="password"
-                                    name='password'
-                                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Password"
-                                />
-                            </div>
-                            {/* Toggle to Signup */}
-                            <div className="flex justify-between items-center mb-6">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <input className={`mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${notRegistered ? '' : 'hidden'}`}
+                                    placeholder="Your Name" {...register("name", { maxLength: 20 })} />
+                                <input className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Your email" {...register("email", { required: true, maxLength: 20 })} />
+                                <input className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Your Password" {...register("password", { pattern: /^[A-Za-z]+$/i })} />
+
+
+                                {/* Toggle to Signup */}
+                                <div className="flex justify-between items-center mb-6">
                                     <div className="form-group form-check">
                                         <input
-                                            onChange={()=>setNotRegistered(!notRegistered)}
+                                            onChange={() => setNotRegistered(!notRegistered)}
                                             type="checkbox"
-                                            className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            className=" form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             id="exampleCheck3"
                                         />
-                                        <label className="form-check-label inline-block text-gray-800" htmlFor="exampleCheck2"
-                                        >Not registered?</label>
+                                        <label className={`hover:text-red-500 form-check-label inline-block text-gray-800 ${notRegistered?'text-red-500':''}`} htmlFor="exampleCheck2"
+                                        >Not registered yet?</label>
                                     </div>
                                 </div>
-                            {/* <button href="#!" className="mb-6 p-3 text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"> Forgot password?</button>
-
-                            {/* <!-- Submit button --> */}
-                            <button
-                                type="submit"
-                                className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
-                                data-mdb-ripple="true"
-                                data-mdb-ripple-color="light"
-                            >
-                                Sign in
-                            </button>
-
+                                {/* <input type="number" {...register("age", { min: 18, max: 99 })} /> */}
+                                <input className={`inline-block px-7 py-3 cursor-pointer hover:shadow-lg text-white font-medium text-sm leading-snug uppercase rounded shadow-md  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full ${notRegistered ? 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800' : 'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800'}`} value={`${notRegistered ? 'Sign Up' : 'Sign in'}`} type="submit" />
+                            </form>
+                    
                             <div
                                 className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                             >
                                 <p className="text-center font-semibold mx-4 mb-0">OR</p>
                             </div>
 
-                            <button onClick={() => signInWithGoogle()} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3" style={{ "backgroundColor": "#3b5998" }} href="#!" role="button" data-mdb-ripple="true" data-mdb-ripple-color="light">
+                            <button onClick={() => signInWithGoogle()} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3" style={{ "backgroundColor": "#3b5998" }} href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
                                 {/* <!-- Google --> */}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +77,7 @@ const Login = () => {
                                         fill="currentColor"
                                         d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
                                     /></svg>With Google</button>
-                            <button onClick={() => signInWithGithub()} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center" style={{ "backgroundColor": "#55acee" }} href="#!" role="button" data-mdb-ripple="true" data-mdb-ripple-color="light">
+                            <button onClick={() => signInWithGithub()} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center" style={{ "backgroundColor": "#55acee" }} href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
                                 {/* <!-- Github --> */}
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-3.5 h-3.5 mr-2">
                                     <path
