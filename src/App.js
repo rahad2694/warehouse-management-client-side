@@ -1,17 +1,27 @@
 import { Route, Routes } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
-import NavBar from './components/NavBar/NavBar';
+import Blog from './components/Blog/Blog';
+import Home from './components/Home/Home';
+import TopNav from './components/NavBar/TopNav';
+import Dashboard from './components/Dashboard/Dashboard';
+import AddItems from './components/AddItems/AddItems';
 
 function App() {
   return (
     <div className="App">
-      <NavBar></NavBar>
-      <h1>Welcome to Fruit WMS</h1>
-      {/* <Routes>
-        <Route path='/'>
+      <TopNav></TopNav>
+    
+      <Routes>
+        <Route path='/blog' element={<Blog></Blog>}>
         </Route>
-      </Routes> */}
+        <Route path='/dashboard' element={<Dashboard></Dashboard>}>
+        </Route>
+        <Route path='/additem' element={<AddItems></AddItems>}>
+        </Route>
+        <Route path='/' element={<Home></Home>}>
+        </Route>
+      </Routes>
       <Toaster />
     </div>
   );

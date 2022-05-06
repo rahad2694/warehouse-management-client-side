@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useAuthState, useCreateUserWithEmailAndPassword, useSendEmailVerification, useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import RoundSpinner from '../components/RoundSpinner/RoundSpinner';
 import auth from '../firebase.init';
 import toast from 'react-hot-toast';
+import { async } from '@firebase/util';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -13,49 +14,70 @@ const Login = () => {
         emailUser,
         emaiLloading,
         emailError,
-      ] = useCreateUserWithEmailAndPassword(auth);
-      const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
-      const [sendEmailVerification, verificationSending, verificationError] = useSendEmailVerification(auth);
-      const [
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
+    const [sendEmailVerification, verificationSending, verificationError] = useSendEmailVerification(auth);
+    const [
         signInWithEmailAndPassword,
         emailLoginUser,
         emailLoginLoading,
         emailLoginError,
-      ] = useSignInWithEmailAndPassword(auth);  
+    ] = useSignInWithEmailAndPassword(auth);
 
     const { register, handleSubmit } = useForm();
-    const onSubmit = async(data, e) => {
-        const{name, email, password} = data;
+    const onSubmit = (data, e) => {
+        const { name, email, password } = data;
+        const displayName = name;
         if (!notRegistered) {
             delete data.name;
+            console.log('I am not notRegistered');
             signInWithEmailAndPassword(email, password);
+
+            console.log(data);
+            e.target.reset();
             return;
+        } else {
+            console.log('I am Yes notRegistered');
+            console.log(data);
+            console.log(name, email, password);
+            createUserWithEmailAndPassword(email, password);
+            const nameUpdateNverify = async () => {
+                await updateProfile({ displayName });
+                console.log('I am inside Async');
+                await sendEmailVerification();
+            }
+            nameUpdateNverify();
+            e.target.reset();
         }
-        console.log(data);
-        createUserWithEmailAndPassword(email, password);
-        await updateProfile({ displayName:name});
-        await sendEmailVerification();
-        e.target.reset();
     };
 
     const [signInWithGithub, gitUser, gitLoading, gitError] = useSignInWithGithub(auth);
     const [user] = useAuthState(auth);
+
+    useEffect(() => {
+        if (googleError || gitError || emailError || updatingError || verificationError || emailLoginError) {
+            let errorMsg = googleError?.message || gitError?.message || emailError?.message || updatingError?.message || verificationError?.message || emailLoginError?.message;
+            if (!errorMsg) {
+                toast.error('Unsuccessful Attempt! Try Again..!', { id: 'unsuccessful' })
+            } else {
+                toast.error(errorMsg, { id: 'unsuccessful' });
+            }
+        }
+        // if (updatingError) {
+        //     toast.error('Name Updating Unsuccessful! Try Again..!', { id: 'Name-Unsuccessful' })
+        // }
+        // if (verificationError) {
+        //     toast.error('Verification Email sending Unsuccessful! Try Again..!', { id: 'Verification-Unsuccessful' })
+        // }
+        // if (emailLoginError) {
+        //     toast.error('Log in Attempt Unsuccessful! Try Again..!', { id: 'Login-Unsuccessful' })
+        // }
+    }, [googleError, gitError, emailError, updatingError, verificationError, emailLoginError]);
     if (googleLoading || gitLoading || emaiLloading || updating || verificationSending || emailLoginLoading) {
         return <RoundSpinner></RoundSpinner>
     }
-    if (googleError || gitError || emailError) {
-        toast.error('Unsuccessful Attempt! Try Again..!', { id: 'unsuccessful' })
-    }
-    if (updatingError) {
-        toast.error('Name Updating Unsuccessful! Try Again..!', { id: 'Name-Unsuccessful' })
-    }
-    if (verificationError) {
-        toast.error('Verification Email sending Unsuccessful! Try Again..!', { id: 'Verification-Unsuccessful' })
-    }
-    if (emailLoginError) {
-        toast.error('Log in Attempt Unsuccessful! Try Again..!', { id: 'Login-Unsuccessful' })
-    }
     console.log(user);
+    console.log(notRegistered);
     return (
         <div>
             <section>
@@ -68,14 +90,15 @@ const Login = () => {
                                     placeholder="Your Name" {...register("name", { maxLength: 20 })} />
                                 <input className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     placeholder="Your email" {...register("email", { required: true, maxLength: 20 })} />
-                                <input className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Your Password" {...register("password", { pattern: /^[A-Za-z]+$/i })} />
+                                <input type="password" className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Your Password" {...register("password")} />
+                                {/* , { pattern: /^[A-Za-z]+$/i } */}
 
                                 {/* Toggle to Signup */}
                                 <div className="flex justify-between items-center mb-6">
                                     <div className="form-group form-check">
                                         <input
-                                            onChange={() => setNotRegistered(!notRegistered)}
+                                            onClick={() => setNotRegistered(!notRegistered)}
                                             type="checkbox"
                                             className=" form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             id="exampleCheck3"
@@ -86,7 +109,7 @@ const Login = () => {
                                 </div>
                                 <input className={`inline-block px-7 py-3 cursor-pointer hover:shadow-lg text-white font-medium text-sm leading-snug uppercase rounded shadow-md  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full ${notRegistered ? 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800' : 'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800'}`} value={`${notRegistered ? 'Sign Up' : 'Sign in'}`} type="submit" />
                             </form>
-                        {/* Social Login/SignUp */}
+                            {/* Social Login/SignUp */}
                             <div
                                 className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                             >
@@ -94,7 +117,7 @@ const Login = () => {
                             </div>
 
                             <button onClick={() => signInWithGoogle()} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3" style={{ "backgroundColor": "#3b5998" }} data-mdb-ripple="true" data-mdb-ripple-color="light">
-                            With Google
+                                With Google
                                 {/* -- Google -- */}
                                 <svg viewBox="0 0 320 512"
                                     className="w-3.5 h-3.5 ml-2">
