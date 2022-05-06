@@ -29,7 +29,7 @@ const TopNav = () => {
                             <NavLink to="/" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Home</NavLink>
                         </li>
                         <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
-                            <NavLink to="/dashboard" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Manage Items</NavLink>
+                            <NavLink to="/manageinventory" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Manage Inventories</NavLink>
                         </li>
                         <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
                             <NavLink to="/additem" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Add Items</NavLink>
