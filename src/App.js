@@ -7,6 +7,7 @@ import TopNav from './components/NavBar/TopNav';
 import Dashboard from './components/Dashboard/Dashboard';
 import AddItems from './components/AddItems/AddItems';
 import Allinventories from './components/Allinventories/Allinventories';
+import UpdateInventory from './components/UpdateInventory/UpdateInventory';
 const axios = require('axios');
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         <Route path='/additem' element={<AddItems></AddItems>}>
         </Route>
         <Route path='/manageinventory' element={<Allinventories></Allinventories>}>
+        </Route>
+        <Route path='/updateinventory/:id' element={<UpdateInventory></UpdateInventory>}>
         </Route>
         <Route path='/' element={<Home></Home>}>
         </Route>
