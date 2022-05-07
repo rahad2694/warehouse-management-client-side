@@ -8,7 +8,7 @@ import auth from '../../firebase.init';
 const TopNav = () => {
     const [user] = useAuthState(auth);
     return (
-        <nav className="relative w-full flex flex-wrap items-center justify-between py-4 bg-yellow-400 text-black hover:text-green-500 shadow-lg navbar navbar-expand-lg navbar-light sticky top-0 z-50">
+        <nav className="relative w-full flex flex-wrap items-center justify-between py-4 bg-yellow-400 text-black shadow-lg navbar navbar-expand-lg navbar-light sticky top-0 z-50">
             <div className="container-fluid w-full flex flex-wrap items-center justify-between px-6">
                 <button className="navbar-toggler text-black border-0 hover:shadow-none hover:no-underline py-2 px-2.5 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none focus:no-underline" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,8 +21,9 @@ const TopNav = () => {
                 </button>
                 <div className="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent">
                     <Link to="/" className=" flex items-center mt-2 lg:mt-0 mr-1">
-                        <img src={user?.uid ? user.photoURL : 'https://i.ibb.co/R6RkCG6/blank-user.jpg'} style={{ "height": "40px" }} alt=""
+                        <img src="https://i.ibb.co/Ttmy7BR/logo.png" style={{ "height": "40px" }} alt=""
                             loading="lazy" />
+                        <h1 className='text-3xl font-bold ml-2 mr-3 hover:text-white font-Brush'>VitaPure</h1>
                     </Link>
                     <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
                         <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">

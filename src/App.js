@@ -7,6 +7,7 @@ import TopNav from './components/NavBar/TopNav';
 import Dashboard from './components/Dashboard/Dashboard';
 import AddItems from './components/AddItems/AddItems';
 import Allinventories from './components/Allinventories/Allinventories';
+const axios = require('axios');
 
 function App() {
   return (

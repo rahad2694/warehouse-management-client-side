@@ -17,10 +17,10 @@ const AddItems = () => {
     };
     const addItemToDB = async (newItem) => {
         try {
-            const response = await axios.post('http://localhost:5000/additem', { newItem });
+            const response = await axios.post('http://localhost:5000/additem', newItem);
             console.log(response);
-            console.log(response.status);
-            if(response.data.status === 200){
+            // console.log(response.status);
+            if(response.status === 200){
             toast.success('Successfully Added New Item', { id: 'Success' });
             }
         } catch (error) {
@@ -38,16 +38,16 @@ const AddItems = () => {
                     <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Your Email' value={user?.email}
                         disabled {...register("email")} />
 
-                    <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Item Name' {...register("itemName", { required: true, maxLength: 20 })} />
+                    <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Item Name' {...register("itemName", { required: true})} />
 
                     <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Item Price'
-                        type="number" {...register("itemPrice", { required: true, pattern: /^\d+$/i })} />
+                         {...register("itemPrice", { required: true, pattern: /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/i })} />
 
                     <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Item Picture URL' {...register("itemPic", { required: true })} />
 
                     <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Item Description' {...register("itemDescription")} />
 
-                    <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" type="number" placeholder='Item Quantity' {...register("itemQuantity", { required: true, pattern: /^\d+$/i })} />
+                    <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" type="number" placeholder='Item Quantity' {...register("itemQuantity", { required: true, pattern: /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/i })} />
 
                     <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" placeholder='Supplier Name' {...register("supplierName", { required: true })} />
 

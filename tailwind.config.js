@@ -4,6 +4,9 @@ module.exports = {
     require('tw-elements/dist/plugin')
   ],
   theme: {
+    fontFamily: {
+      'Brush' : ['Brush Script MT','Cursive']
+    },
     extend: {
       colors: {
         'light-purple': '#a77efe',
