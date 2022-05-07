@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import auth from '../../firebase.init';
 const axios = require('axios').default;
 
@@ -74,7 +74,7 @@ const UpdateInventory = () => {
         <div>
             <div className='mr-10'>
                 <div className='flex justify-end'>
-                    <button onClick={quantityUpdate} className='fixed mt-32 mr-3 lg:mr-20 p-4 bg-transparent border-2 rounded-lg shadow-md'><span className='text-xl font-bold'>{itemQuantity}</span><br/><span className='hover:text-red-500'>Delivered</span></button>
+                    <button onClick={quantityUpdate} className='fixed mt-32 mr-3 lg:mr-20 p-4 bg-transparent border-2 rounded-lg shadow-md'><span className='text-xl font-bold'>{itemQuantity}</span><br /><span className='hover:text-red-500'>Delivered</span></button>
                 </div>
             </div>
             <div className='flex ml-1 justify-center align-middle my-5'>
@@ -118,6 +118,10 @@ const UpdateInventory = () => {
 
                     <input className="w-full px-6 py-2.5 bg-yellow-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-green-400 hover:shadow-lg focus:bg-yellow-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer" type="submit" value="Yes Update Item" />
                 </form>
+            </div>
+            <h1 className='my-6'>---------OR------------</h1>
+            <div className='mb-10'>
+                <Link className='px-6 py-2.5 bg-yellow-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-green-400 hover:shadow-lg focus:bg-yellow-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer' to="/manageinventory">Manage All Inventories</Link>
             </div>
         </div>
     );
