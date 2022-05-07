@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import RoundSpinner from '../RoundSpinner/RoundSpinner';
 import SingleItem from './SingleItem';
 
 const Allinventories = () => {
     const [allIetms , setAllItems] = useState([]);
+    
     useEffect(()=>{
         async function getItems(){
             try{
-                toast('Loading All Items',{id:'loading'});
+                // toast('Loading All Items',{id:'loading'});
                 const response = await axios.get('https://wms-by-rahad.herokuapp.com/inventories');
                 setAllItems(response.data);
             }
@@ -18,7 +20,10 @@ const Allinventories = () => {
             }
         }
         getItems();
-    },[]);
+    },[allIetms]);
+    if(allIetms.length == 0){
+        return <RoundSpinner></RoundSpinner>
+    }
     console.log(allIetms);
     return (
         <div className='mx-3'>
