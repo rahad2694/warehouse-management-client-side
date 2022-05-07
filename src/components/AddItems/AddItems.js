@@ -17,7 +17,7 @@ const AddItems = () => {
     };
     const addItemToDB = async (newItem) => {
         try {
-            const response = await axios.post('http://localhost:5000/additem', newItem);
+            const response = await axios.post('https://wms-by-rahad.herokuapp.com/additem', newItem);
             console.log(response);
             // console.log(response.status);
             if(response.status === 200){

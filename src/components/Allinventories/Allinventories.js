@@ -9,7 +9,7 @@ const Allinventories = () => {
         async function getItems(){
             try{
                 toast('Loading All Items',{id:'loading'});
-                const response = await axios.get('http://localhost:5000/inventories');
+                const response = await axios.get('https://wms-by-rahad.herokuapp.com/inventories');
                 setAllItems(response.data);
             }
             catch (error){
@@ -21,7 +21,7 @@ const Allinventories = () => {
     },[]);
     console.log(allIetms);
     return (
-        <div>
+        <div className='mx-3'>
             <div className='flex justify-center align-middle my-5'>
                 <div>
                     <img src="https://i.ibb.co/rwQnFrc/manage.jpg" alt="" />
@@ -35,6 +35,7 @@ const Allinventories = () => {
                     allIetms.map(item => <SingleItem key={item._id} item={item}></SingleItem>)
                 }
             </div>
+
         </div>
     );
 };
