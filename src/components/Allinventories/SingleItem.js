@@ -2,12 +2,15 @@ import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import auth from '../../firebase.init';
 import DeleteModal from './DeleteModal';
 import './SingleItem.css'
 
 const SingleItem = ({ item }) => {
+    const[user] =useAuthState(auth);
     const { email, itemDescription, itemName, itemPic, itemPrice, itemQuantity, supplierName, _id } = item;
     // console.log(item);
     const handleDelete = (id) =>{
@@ -15,7 +18,7 @@ const SingleItem = ({ item }) => {
         const proceed = window.confirm("Are you sure to delete?");
         if(proceed){
             // toast('Deleting Item',{id:'Deleting-attempt'})
-            axios.delete(`http://localhost:5000/ietm/${id}`)
+            axios.delete(`https://wms-by-rahad.herokuapp.com/ietm/${id}`)
             .then(response =>{
                 console.log(response);
                 toast.success('Successfully Deleted',{id:'deleted'})
@@ -86,7 +89,7 @@ const SingleItem = ({ item }) => {
             </div>
             <div className='flex justify-center mt-3'>
                 <Link to={`/updateinventory/${_id}`} className="mr-2 px-6 py-2.5 bg-yellow-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer">Update <FontAwesomeIcon icon={faFilePen} /></Link>
-                <button onClick={()=>handleDelete(_id)} className="ml-2 px-6 py-2.5 bg-red-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer">Remove  <FontAwesomeIcon icon={faTrashCan} /></button>
+                {user?.uid && <button onClick={()=>handleDelete(_id)} className="ml-2 px-6 py-2.5 bg-red-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer">Remove  <FontAwesomeIcon icon={faTrashCan} /></button>}
                 {/* <DeleteModal onClick={()=>handleDelete(_id)}></DeleteModal> */}
             </div>
         </div>

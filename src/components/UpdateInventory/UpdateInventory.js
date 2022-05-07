@@ -12,7 +12,7 @@ const UpdateInventory = () => {
     const { id } = useParams();
     const [info, setInfo] = useState({});
     const response = async () => {
-        const response = await axios.get(`http://localhost:5000/iteminfo/${id}`);
+        const response = await axios.get(`https://wms-by-rahad.herokuapp.com/iteminfo/${id}`);
         setInfo(response.data);
     };
     useEffect(() => {
@@ -52,7 +52,7 @@ const UpdateInventory = () => {
     };
     const updateItemToDB = async (newItem) => {
         try {
-            const response = await axios.put(`http://localhost:5000/updateinfo/${id}`, newItem);
+            const response = await axios.put(`https://wms-by-rahad.herokuapp.com/updateinfo/${id}`, newItem);
             console.log(response);
             if (response.status === 200) {
                 toast.success('Successfully Updated The whole Item', { id: 'Success' });
@@ -78,8 +78,10 @@ const UpdateInventory = () => {
                 </div>
             </div>
             <div className='flex ml-1 justify-center align-middle my-5'>
-                <img src="https://i.ibb.co/DwLNJT5/upload.jpg" alt="" />
-                <h1 className='ml-2 text-xl font-bold'>Want to Update <span className='text-green-500 hover:text-red-500'>{itemName}</span> ?</h1>
+                <div className='my-auto mr-2'>
+                    <img src="https://i.ibb.co/DwLNJT5/upload.jpg" alt="" />
+                </div>
+                <h1 className='ml-2 text-xl font-bold'>Want to Update<br/><span className='text-green-500 hover:text-red-500'>{itemName}</span> ?</h1>
             </div>
 
             <div className='bg-orange-200 w-3/4 mx-auto p-3'>

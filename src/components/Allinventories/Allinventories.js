@@ -21,7 +21,7 @@ const Allinventories = () => {
         }
         getItems();
     },[allIetms]);
-    if(allIetms.length == 0){
+    if(allIetms.length === 0){
         return <RoundSpinner></RoundSpinner>
     }
     console.log(allIetms);
