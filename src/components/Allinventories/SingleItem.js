@@ -2,6 +2,7 @@ import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DeleteModal from './DeleteModal';
 
 const SingleItem = ({ item }) => {
     const { email, itemDescription, itemName, itemPic, itemPrice, itemQuantity, supplierName, _id } = item;
@@ -63,7 +64,8 @@ const SingleItem = ({ item }) => {
             </div>
             <div className='flex justify-center mt-3'>
                 <Link to={`/updateinventory/${_id}`} className="mr-2 px-6 py-2.5 bg-yellow-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer">Update <FontAwesomeIcon icon={faFilePen} /></Link>
-                <button className="ml-2 px-6 py-2.5 bg-red-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer">Remove  <FontAwesomeIcon icon={faTrashCan} /></button>
+                {/* <button className="ml-2 px-6 py-2.5 bg-red-400 text-white font-medium text-lg leading-tight uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-lg transition duration-150 ease-in-out mt-5 cursor-pointer">Remove  <FontAwesomeIcon icon={faTrashCan} /></button> */}
+                <DeleteModal></DeleteModal>
             </div>
         </div>
     );
