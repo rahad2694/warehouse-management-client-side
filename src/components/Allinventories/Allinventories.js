@@ -30,7 +30,7 @@ const Allinventories = () => {
                     <h1 className='ml-2 text-xl font-bold'>Manage All Inventories</h1>
                 </div>
             </div>
-            <div className='grid gap-4 grid-cols-2'>
+            <div className='grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 container mx-auto'>
                 {
                     allIetms.map(item => <SingleItem key={item._id} item={item}></SingleItem>)
                 }
