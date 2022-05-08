@@ -33,7 +33,7 @@ const CompanyTimeLine = () => {
                         <h4 class="text-gray-800 font-semibold text-xl -mt-2">Payment to Shanghai Agro Co.</h4>
                     </div>
                     <div class="ml-6 mb-6 pb-6">
-                        <a href="#!" class="text-blue-600 hover:text-blue-700 focus:text-blue-800 duration-300 transition ease-in-out text-sm">29 May, 2021</a>
+                        <a href="#!" class="text-blue-600 hover:text-blue-700 focus:text-blue-800 duration-300 transition ease-in-out text-sm">29 May, 2022</a>
                         <p class="text-gray-700 mt-2 mb-4 w-3/4 mx-auto">Release the fund transfer order against three proforma indexes which should be closed with approximate payable amount of $35000 by 29th May 2022</p>
                         <button type="button" class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Mark Complete</button>
                     </div>
