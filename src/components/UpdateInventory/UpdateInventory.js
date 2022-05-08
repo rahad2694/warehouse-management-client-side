@@ -63,6 +63,10 @@ const UpdateInventory = () => {
         }
     }
     const quantityUpdate = () => {
+        if(Number(itemQuantity)<= 0){
+            toast.error('Already Delivered all Units',{id:'stock-zero'});
+            return;
+        }
         info.itemQuantity = Number(itemQuantity) - 1;
         let newInfo = info;
         delete newInfo._id;
