@@ -1,5 +1,5 @@
 # VitaPure 
-### (This is an WMS- "Warehouse Management System" Which will help a dealer to sore his item list with proper stock and price info. Ass well as it will help him managing his warehouse digitally)
+### (This is an WMS- "Warehouse Management System" Which will help a dealer to sore his items with proper stock and price info. As well as it will help him managing his warehouse digitally)
 
 For Live Site Link [Click Here](https://vitapure-wms.web.app/).
 
@@ -30,7 +30,7 @@ For Live Site Link [Click Here](https://vitapure-wms.web.app/).
 * Hot toast
 * Tailwind Elements
 * FontAwesome
-### Frameworks / Libraries /Database used in Back-End:
+### Frameworks / Libraries / Database used in Back-End:
 
 * Nodemon
 * CORS
