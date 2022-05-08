@@ -26,6 +26,10 @@ const UpdateInventory = () => {
             toast.error('Please edit at least one info to update the Item', { id: 'updating-no-possible' });
             return;
         }
+        if(data.itemQuantity < 0){
+            toast.error('Quantity can not be NEGATIVE',{id:'Negative-qauant'});
+            return;
+        }
         if (!data.email) {
             data.email = email;
         }
@@ -74,9 +78,9 @@ const UpdateInventory = () => {
     }
     return (
         <div>
-            <div className='mr-10'>
+            <div className='mr-'>
                 <div className='flex justify-end'>
-                    <button onClick={quantityUpdate} className='fixed mt-32 mr-3 lg:mr-20 p-4 bg-transparent border-2 rounded-lg shadow-md'><span className='text-xl font-bold'>{itemQuantity}</span><br /><span className='hover:text-red-500'>Delivered</span></button>
+                    <button onClick={quantityUpdate} className='fixed mt-2 lg:mr-10 lg:mt-20 p-3 bg-transparent border-2 rounded-lg shadow-md'><span className='text-xl font-bold'>{itemQuantity}</span><br /><span className='hover:text-red-500'>Delivered</span></button>
                 </div>
             </div>
             <div className='flex ml-1 justify-center align-middle my-5'>

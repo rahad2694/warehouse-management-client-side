@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import RoundSpinner from '../RoundSpinner/RoundSpinner';
 import SingleItem from './SingleItem';
 
@@ -25,6 +26,11 @@ const Allinventories = () => {
     }
     return (
         <div className='mx-3'>
+            <div className='mr-2'>
+                <div className='flex justify-end'>
+                    <Link to="/additem" className='fixed lg:mt-5 lg:mr-4 lg:p-3 p-2 bg-transparent border-2 rounded-lg shadow-md'><span className='hover:text-red-500'>Add New Item</span></Link>
+                </div>
+            </div>
             <div className='flex justify-center align-middle my-5'>
                 <div>
                     <img src="https://i.ibb.co/rwQnFrc/manage.jpg" alt="" />
