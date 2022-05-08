@@ -46,7 +46,7 @@ const Home = () => {
             </div>
             <SalesBar></SalesBar>
             <CompanyTimeLine></CompanyTimeLine>
-            <Footer></Footer>
+            
         </div>
     );
 };

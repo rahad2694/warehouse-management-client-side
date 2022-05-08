@@ -11,6 +11,7 @@ import Login from './Login/Login';
 import MyItems from './components/MyItems/MyItems';
 import NoRoute404 from './components/NoRoute404/NoRoute404';
 import RequireAuth from './Login/RequireAuth';
+import Footer from './components/Footer/Footer';
 const axios = require('axios');
 
 function App() {
@@ -51,11 +52,12 @@ function App() {
 
         <Route path='/blogs' element={<Blog></Blog>}>
         </Route>
-        
+
         <Route path='*' element={<NoRoute404></NoRoute404>}>
         </Route>
       </Routes>
       <Toaster />
+      <Footer></Footer>
     </div>
   );
 }
