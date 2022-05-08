@@ -18,7 +18,6 @@ const UpdateInventory = () => {
     useEffect(() => {
         response();
     }, [info]);
-    // console.log(info);
     const { email, itemDescription, itemName, itemPic, itemPrice, itemQuantity, supplierName } = info;
 
     const { register, handleSubmit } = useForm();
@@ -53,24 +52,23 @@ const UpdateInventory = () => {
     const updateItemToDB = async (newItem) => {
         try {
             const response = await axios.put(`https://wms-by-rahad.herokuapp.com/updateinfo/${id}`, newItem);
-            console.log(response);
+            // console.log(response);
             if (response.status === 200) {
                 toast.success('Successfully Updated The whole Item', { id: 'Success' });
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error(error.message, { id: 'update-error' });
         }
     }
     const quantityUpdate = () => {
-        if(Number(itemQuantity)<= 0){
-            toast.error('Already Delivered all Units',{id:'stock-zero'});
+        if (Number(itemQuantity) <= 0) {
+            toast.error('Already Delivered all Units', { id: 'stock-zero' });
             return;
         }
         info.itemQuantity = Number(itemQuantity) - 1;
         let newInfo = info;
         delete newInfo._id;
-        console.log(newInfo);
         updateItemToDB(newInfo);
         toast.success(`1 kg ${itemName} Delivered.!`, { id: 'delivery-success' });
     }

@@ -4,7 +4,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
 import auth from '../../firebase.init';
 import SingleItem from '../Allinventories/SingleItem';
-import RoundSpinner from '../RoundSpinner/RoundSpinner';
 
 const MyItems = () => {
     const [myItems, setMyItems] = useState([]);
@@ -12,12 +11,11 @@ const MyItems = () => {
     useEffect(() => {
         async function getItems() {
             try {
-                // toast('Loading All Items',{id:'loading'});
                 const response = await axios.get(`https://wms-by-rahad.herokuapp.com/myinventories?email=${user?.email}`);
                 setMyItems(response.data);
             }
             catch (error) {
-                console.log(error);
+                // console.log(error);
                 toast.error(error.message, { id: 'error-message' })
             }
         }

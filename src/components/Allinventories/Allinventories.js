@@ -5,26 +5,24 @@ import RoundSpinner from '../RoundSpinner/RoundSpinner';
 import SingleItem from './SingleItem';
 
 const Allinventories = () => {
-    const [allIetms , setAllItems] = useState([]);
-    
-    useEffect(()=>{
-        async function getItems(){
-            try{
-                // toast('Loading All Items',{id:'loading'});
+    const [allIetms, setAllItems] = useState([]);
+
+    useEffect(() => {
+        async function getItems() {
+            try {
                 const response = await axios.get('https://wms-by-rahad.herokuapp.com/inventories');
                 setAllItems(response.data);
             }
-            catch (error){
-                console.log(error);
-                toast.error(error.message,{id:'error-message'})
+            catch (error) {
+                // console.log(error);
+                toast.error(error.message, { id: 'error-message' })
             }
         }
         getItems();
-    },[allIetms]);
-    if(allIetms.length === 0){
+    }, [allIetms]);
+    if (allIetms.length === 0) {
         return <RoundSpinner></RoundSpinner>
     }
-    console.log(allIetms);
     return (
         <div className='mx-3'>
             <div className='flex justify-center align-middle my-5'>
@@ -40,7 +38,6 @@ const Allinventories = () => {
                     allIetms.map(item => <SingleItem key={item._id} item={item}></SingleItem>)
                 }
             </div>
-
         </div>
     );
 };

@@ -9,7 +9,7 @@ import RoundSpinner from '../RoundSpinner/RoundSpinner';
 
 const Home = () => {
     const [allIetms, setAllItems] = useState([]);
-
+    
     useEffect(() => {
         async function getItems() {
             try {
@@ -17,7 +17,7 @@ const Home = () => {
                 setAllItems(response.data);
             }
             catch (error) {
-                console.log(error);
+                // console.log(error);
                 toast.error(error.message, { id: 'error-message' })
             }
         }

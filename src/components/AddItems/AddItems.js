@@ -4,18 +4,15 @@ import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
 import auth from '../../firebase.init';
 // const axios = require('axios');
-const axios = require('axios').default;
+// const axios = require('axios').default;
 
 const AddItems = () => {
     const [user] = useAuthState(auth);
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
         data.email = user.email;
-
         // addItemToDB(data);
-
-
-        const url = `http://localhost:5000/additem`;
+        const url = `https://wms-by-rahad.herokuapp.com/additem`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -26,16 +23,13 @@ const AddItems = () => {
         })
             .then(res => res.json())
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 toast.success("New Item added successfully");
-                // e.target.reset();
+                e.target.reset();
             })
             .catch(err => {
-                console.log(err);
                 toast.error(err.message, { id: 'adding-error' });
             });
-
-        e.target.reset();
     };
     // const addItemToDB = async (newItem) => {
     //     try {
