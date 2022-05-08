@@ -12,29 +12,40 @@ import LoginUser from './components/LoginUser/LoginUser';
 import Login from './Login/Login';
 import MyItems from './components/MyItems/MyItems';
 import NoRoute404 from './components/NoRoute404/NoRoute404';
+import RequireAuth from './Login/RequireAuth';
 const axios = require('axios');
 
 function App() {
   return (
     <div className="App">
       <TopNav></TopNav>
-    
+
       <Routes>
-        <Route path='/blog' element={<Blog></Blog>}>
+        {/* <Route path='/dashboard' element={<Dashboard></Dashboard>}>
+        </Route> */}
+        <Route path='/myitems' element={
+          <RequireAuth>
+            <MyItems></MyItems>
+          </RequireAuth>
+        }>
         </Route>
-        <Route path='/dashboard' element={<Dashboard></Dashboard>}>
-        </Route>
-        <Route path='/myitems' element={<MyItems></MyItems>}>
-        </Route>
-        <Route path='/loginuser' element={<LoginUser></LoginUser>}>
-        </Route>
+        {/* <Route path='/loginuser' element={<LoginUser></LoginUser>}>
+        </Route> */}
         <Route path='/login' element={<Login></Login>}>
         </Route>
-        <Route path='/additem' element={<AddItems></AddItems>}>
+        <Route path='/additem' element={
+          <RequireAuth>
+            <AddItems></AddItems>
+          </RequireAuth>
+        }>
         </Route>
         <Route path='/manageinventory' element={<Allinventories></Allinventories>}>
         </Route>
-        <Route path='/updateinventory/:id' element={<UpdateInventory></UpdateInventory>}>
+        <Route path='/updateinventory/:id' element={
+          <RequireAuth>
+            <UpdateInventory></UpdateInventory>
+          </RequireAuth>
+        }>
         </Route>
         <Route path='/' element={<Home></Home>}>
         </Route>
