@@ -30,14 +30,14 @@ const TopNav = () => {
                             <NavLink to="/" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Home</NavLink>
                         </li>
                         <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
-                            <NavLink to="/manageinventory" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Manage Inventories</NavLink>
+                            <NavLink to="/manageinventory" className={({ isActive }) => (isActive) ? 'text-white' : ''}>{user?.uid ? 'Manage Inventories':'Inventory List'}</NavLink>
                         </li>
-                        <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
+                        {user?.uid && <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
                             <NavLink to="/additem" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Add Items</NavLink>
-                        </li>
-                        <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
-                            <NavLink to="/dashboard" className={({ isActive }) => (isActive) ? 'text-white' : ''}>My Items</NavLink>
-                        </li>
+                        </li>}
+                        {user?.uid && <li className="nav-item pt-2 px-2 text-black hover:text-green-500  font-bold font-serif text-lg">
+                            <NavLink to="/myitems" className={({ isActive }) => (isActive) ? 'text-white' : ''}>My Items</NavLink>
+                        </li>}
                     </ul>
                 </div>
                 <div className="flex items-center relative ">

@@ -6,7 +6,7 @@ import Login from '../../Login/Login';
 
 const Modal = () => {
     const [user] = useAuthState(auth);
-    console.log(user);
+    // console.log(user);
     return (
         <div>
             {/* <!-- Button trigger modal --> */}

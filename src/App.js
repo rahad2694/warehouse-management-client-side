@@ -10,6 +10,7 @@ import Allinventories from './components/Allinventories/Allinventories';
 import UpdateInventory from './components/UpdateInventory/UpdateInventory';
 import LoginUser from './components/LoginUser/LoginUser';
 import Login from './Login/Login';
+import MyItems from './components/MyItems/MyItems';
 const axios = require('axios');
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
         <Route path='/blog' element={<Blog></Blog>}>
         </Route>
         <Route path='/dashboard' element={<Dashboard></Dashboard>}>
+        </Route>
+        <Route path='/myitems' element={<MyItems></MyItems>}>
         </Route>
         <Route path='/loginuser' element={<LoginUser></LoginUser>}>
         </Route>

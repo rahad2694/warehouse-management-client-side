@@ -28,7 +28,7 @@ const Login = () => {
 
     const nameUpdateNverify = async (displayName) => {
         await updateProfile({ displayName });
-        console.log('I am inside Async', displayName);
+        // console.log('I am inside Async', displayName);
         await sendEmailVerification();
     }
     const { register, handleSubmit } = useForm();
@@ -37,25 +37,24 @@ const Login = () => {
         const displayName = name;
         if (!notRegistered) {
             delete data.name;
-            console.log('I am Registered');
+            // console.log('I am Registered');
             signInWithEmailAndPassword(email, password);
 
-            console.log(data);
+            // console.log(data);
             e.target.reset();
             return;
         } else {
-            console.log('I am notRegistered');
-            console.log(data);
-            console.log(name, email, password);
-            console.log(displayName);
+            // console.log('I am notRegistered');
+            // console.log(data);
+            // console.log(name, email, password);
+            // console.log(displayName);
             createUserWithEmailAndPassword(email, password);
             // const nameUpdateNverify = async () => {
             //     await updateProfile({ displayName });
             //     console.log('I am inside Async');
             //     await sendEmailVerification();
             // }
-            // nameUpdateNverify(displayName);
-            sendEmailVerification();
+            nameUpdateNverify(displayName);
             e.target.reset();
         }
     };
@@ -84,8 +83,8 @@ const Login = () => {
     if (googleLoading || gitLoading || emaiLloading || updating || verificationSending || emailLoginLoading) {
         return <RoundSpinner></RoundSpinner>
     }
-    console.log(user);
-    console.log(notRegistered);
+    // console.log(user);
+    // console.log(notRegistered);
     return (
         <div>
             {user?.uid && <div className='my-10 border-2 w-2/4 mx-auto py-10 rounded-lg shadow-lg'>
