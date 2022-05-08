@@ -81,7 +81,7 @@ const UpdateInventory = () => {
                 <div className='my-auto mr-2'>
                     <img src="https://i.ibb.co/DwLNJT5/upload.jpg" alt="" />
                 </div>
-                <h1 className='ml-2 text-xl font-bold'>Want to Update<br/><span className='text-green-500 hover:text-red-500'>{itemName}</span> ?</h1>
+                <h1 className='ml-2 text-xl font-bold'>Want to Update<br /><span className='text-green-500 hover:text-red-500'>{itemName}</span> ?</h1>
             </div>
 
             <div className='bg-orange-200 w-3/4 mx-auto p-3'>

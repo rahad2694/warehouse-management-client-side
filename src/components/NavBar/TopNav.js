@@ -61,7 +61,7 @@ const TopNav = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className="dropdown ">
+                    {user?.uid && <div className="dropdown ">
                         <a className="dropdown-toggle flex items-center hidden-arrow" href="#" id="dropdownMenuButton2" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src={user?.uid ? user.photoURL : 'https://i.ibb.co/R6RkCG6/blank-user.jpg'} className="rounded-full"
@@ -69,10 +69,10 @@ const TopNav = () => {
                         </a>
                         <ul className=" dropdown-menu min-w-max absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none left-auto right-0" aria-labelledby="dropdownMenuButton2">
                             <li className=" dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100">
-                                <NavLink to="/about" className={({ isActive }) => (isActive) ? 'text-white' : ''}>About Rahad</NavLink>
+                                <button onClick={() => signOut(auth)} type="button" className="px-6 my-1 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Log Out</button>
                             </li>
                         </ul>
-                    </div>
+                    </div>}
                     <div className="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent">
                         <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
                             <li className="nav-item pt-1 pl-4 pr-2 text-black hover:text-green-500  font-bold">

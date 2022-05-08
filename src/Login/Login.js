@@ -4,10 +4,12 @@ import { useAuthState, useCreateUserWithEmailAndPassword, useSendEmailVerificati
 import RoundSpinner from '../components/RoundSpinner/RoundSpinner';
 import auth from '../firebase.init';
 import toast from 'react-hot-toast';
-import { async } from '@firebase/util';
+import Modal from '../components/Modal/Modal';
+import PasswordReset from '../components/PasswordReset/PasswordReset';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+    const [user] = useAuthState(auth);
     const [notRegistered, setNotRegistered] = useState(false);
     const [
         createUserWithEmailAndPassword,
@@ -24,35 +26,41 @@ const Login = () => {
         emailLoginError,
     ] = useSignInWithEmailAndPassword(auth);
 
+    const nameUpdateNverify = async (displayName) => {
+        await updateProfile({ displayName });
+        console.log('I am inside Async', displayName);
+        await sendEmailVerification();
+    }
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
         const { name, email, password } = data;
         const displayName = name;
         if (!notRegistered) {
             delete data.name;
-            console.log('I am not notRegistered');
+            console.log('I am Registered');
             signInWithEmailAndPassword(email, password);
 
             console.log(data);
             e.target.reset();
             return;
         } else {
-            console.log('I am Yes notRegistered');
+            console.log('I am notRegistered');
             console.log(data);
             console.log(name, email, password);
+            console.log(displayName);
             createUserWithEmailAndPassword(email, password);
-            const nameUpdateNverify = async () => {
-                await updateProfile({ displayName });
-                console.log('I am inside Async');
-                await sendEmailVerification();
-            }
-            nameUpdateNverify();
+            // const nameUpdateNverify = async () => {
+            //     await updateProfile({ displayName });
+            //     console.log('I am inside Async');
+            //     await sendEmailVerification();
+            // }
+            // nameUpdateNverify(displayName);
+            sendEmailVerification();
             e.target.reset();
         }
     };
 
     const [signInWithGithub, gitUser, gitLoading, gitError] = useSignInWithGithub(auth);
-    const [user] = useAuthState(auth);
 
     useEffect(() => {
         if (googleError || gitError || emailError || updatingError || verificationError || emailLoginError) {
@@ -80,16 +88,20 @@ const Login = () => {
     console.log(notRegistered);
     return (
         <div>
-            <section>
+            {user?.uid && <div className='my-10 border-2 w-2/4 mx-auto py-10 rounded-lg shadow-lg'>
+                <h1>Welcome</h1>
+                <Modal></Modal>
+            </div>}
+            {!user?.uid && <section>
                 <div className="container p-6 h-full">
+                    <h1 className='text-lg mt-2 mb-6'>Please Provide your Credentials:</h1>
                     <div className="md:w-8/12 lg:w-5/12 mx-auto ">
                         <div className='mx-auto'>
-
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <input className={`mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${notRegistered ? '' : 'hidden'}`}
-                                    placeholder="Your Name" {...register("name", { maxLength: 20 })} />
+                                    placeholder="Your Name" {...register("name")} />
                                 <input className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Your email" {...register("email", { required: true, maxLength: 20 })} />
+                                    placeholder="Your email" {...register("email", { required: true })} />
                                 <input type="password" className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     placeholder="Your Password" {...register("password")} />
                                 {/* , { pattern: /^[A-Za-z]+$/i } */}
@@ -106,6 +118,9 @@ const Login = () => {
                                         <label className={`hover:text-red-500 form-check-label inline-block text-gray-800 ${notRegistered ? 'text-red-500' : ''}`} htmlFor="exampleCheck2"
                                         >Not registered yet?</label>
                                     </div>
+                                </div>
+                                <div className="flex justify-between items-center mb-6">
+                                    <PasswordReset></PasswordReset>
                                 </div>
                                 <input className={`inline-block px-7 py-3 cursor-pointer hover:shadow-lg text-white font-medium text-sm leading-snug uppercase rounded shadow-md  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full ${notRegistered ? 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800' : 'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800'}`} value={`${notRegistered ? 'Sign Up' : 'Sign in'}`} type="submit" />
                             </form>
@@ -140,7 +155,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>}
         </div>
     );
 };
