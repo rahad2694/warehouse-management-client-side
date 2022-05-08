@@ -5,8 +5,13 @@ import auth from '../firebase.init';
 import toast from 'react-hot-toast';
 import Modal from '../components/Modal/Modal';
 import PasswordReset from '../components/PasswordReset/PasswordReset';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithGithub, gitUser, gitLoading, gitError] = useSignInWithGithub(auth);
     const [user] = useAuthState(auth);
@@ -34,6 +39,7 @@ const Login = () => {
     useEffect(() => {
         if (googleUser || gitUser || emailUser || emailLoginUser) {
             toast.success('Operation Successful..!!');
+            navigate(from, { replace: true });
         }
     }, [googleUser, gitUser, emailUser, emailLoginUser]);
     useEffect(() => {
