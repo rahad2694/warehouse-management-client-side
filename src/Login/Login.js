@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
 import { useAuthState, useCreateUserWithEmailAndPassword, useSendEmailVerification, useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import RoundSpinner from '../components/RoundSpinner/RoundSpinner';
 import auth from '../firebase.init';
@@ -9,7 +8,13 @@ import PasswordReset from '../components/PasswordReset/PasswordReset';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+    const [signInWithGithub, gitUser, gitLoading, gitError] = useSignInWithGithub(auth);
     const [user] = useAuthState(auth);
+
+    const [displayName, setDisplayName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const [notRegistered, setNotRegistered] = useState(false);
     const [
         createUserWithEmailAndPassword,
@@ -26,41 +31,11 @@ const Login = () => {
         emailLoginError,
     ] = useSignInWithEmailAndPassword(auth);
 
-    const nameUpdateNverify = async (displayName) => {
-        await updateProfile({ displayName });
-        // console.log('I am inside Async', displayName);
-        await sendEmailVerification();
-    }
-    const { register, handleSubmit } = useForm();
-    const onSubmit = (data, e) => {
-        const { name, email, password } = data;
-        const displayName = name;
-        if (!notRegistered) {
-            delete data.name;
-            // console.log('I am Registered');
-            signInWithEmailAndPassword(email, password);
-
-            // console.log(data);
-            e.target.reset();
-            return;
-        } else {
-            // console.log('I am notRegistered');
-            // console.log(data);
-            // console.log(name, email, password);
-            // console.log(displayName);
-            createUserWithEmailAndPassword(email, password);
-            // const nameUpdateNverify = async () => {
-            //     await updateProfile({ displayName });
-            //     console.log('I am inside Async');
-            //     await sendEmailVerification();
-            // }
-            nameUpdateNverify(displayName);
-            e.target.reset();
+    useEffect(() => {
+        if (googleUser || gitUser || emailUser || emailLoginUser) {
+            toast.success('Operation Successful..!!');
         }
-    };
-
-    const [signInWithGithub, gitUser, gitLoading, gitError] = useSignInWithGithub(auth);
-
+    }, [googleUser, gitUser, emailUser, emailLoginUser]);
     useEffect(() => {
         if (googleError || gitError || emailError || updatingError || verificationError || emailLoginError) {
             let errorMsg = googleError?.message || gitError?.message || emailError?.message || updatingError?.message || verificationError?.message || emailLoginError?.message;
@@ -70,21 +45,12 @@ const Login = () => {
                 toast.error(errorMsg, { id: 'unsuccessful' });
             }
         }
-        // if (updatingError) {
-        //     toast.error('Name Updating Unsuccessful! Try Again..!', { id: 'Name-Unsuccessful' })
-        // }
-        // if (verificationError) {
-        //     toast.error('Verification Email sending Unsuccessful! Try Again..!', { id: 'Verification-Unsuccessful' })
-        // }
-        // if (emailLoginError) {
-        //     toast.error('Log in Attempt Unsuccessful! Try Again..!', { id: 'Login-Unsuccessful' })
-        // }
+
     }, [googleError, gitError, emailError, updatingError, verificationError, emailLoginError]);
     if (googleLoading || gitLoading || emaiLloading || updating || verificationSending || emailLoginLoading) {
         return <RoundSpinner></RoundSpinner>
     }
-    // console.log(user);
-    // console.log(notRegistered);
+
     return (
         <div>
             {user?.uid && <div className='my-10 border-2 w-2/4 mx-auto py-10 rounded-lg shadow-lg'>
@@ -96,14 +62,38 @@ const Login = () => {
                     <h1 className='text-lg mt-2 mb-6'>Please Provide your Credentials:</h1>
                     <div className="md:w-8/12 lg:w-5/12 mx-auto ">
                         <div className='mx-auto'>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                <input className={`mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${notRegistered ? '' : 'hidden'}`}
-                                    placeholder="Your Name" {...register("name")} />
-                                <input className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Your email" {...register("email", { required: true })} />
-                                <input type="password" className="mb-6 form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Your Password" {...register("password")} />
-                                {/* , { pattern: /^[A-Za-z]+$/i } */}
+                            <div>
+                                {/* -- Name input -- */}
+                                {notRegistered && <div className="mb-6">
+                                    <input
+                                        onBlur={(e) => setDisplayName(e.target.value)}
+                                        type="text"
+                                        required
+                                        className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        id="exampleFormControlInput1"
+                                        placeholder="Your Name" />
+                                </div>}
+                                {/* -- Email input -- */}
+                                <div className="mb-6">
+                                    <input
+                                        onBlur={(e) => setEmail(e.target.value)}
+                                        type="text"
+                                        required
+                                        className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        id="exampleFormControlInput2"
+                                        placeholder="Email address" />
+                                </div>
+
+                                {/* -- Password input -- */}
+                                <div className="mb-6">
+                                    <input
+                                        onBlur={(e) => setPassword(e.target.value)}
+                                        type="password"
+                                        required
+                                        className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        id="exampleFormControlInput3"
+                                        placeholder="Password" />
+                                </div>
 
                                 {/* Toggle to Signup */}
                                 <div className="flex justify-between items-center mb-6">
@@ -118,11 +108,51 @@ const Login = () => {
                                         >Not registered yet?</label>
                                     </div>
                                 </div>
-                                <div className="flex justify-between items-center mb-6">
+                                <div className="flex justify-between items-center mb-2 ml-2">
                                     <PasswordReset></PasswordReset>
                                 </div>
-                                <input className={`inline-block px-7 py-3 cursor-pointer hover:shadow-lg text-white font-medium text-sm leading-snug uppercase rounded shadow-md  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full ${notRegistered ? 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800' : 'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800'}`} value={`${notRegistered ? 'Sign Up' : 'Sign in'}`} type="submit" />
-                            </form>
+                                <div className="flex justify-center">
+                                    <button
+                                        onClick={async () => {
+                                            //Perform as SignUp Button
+                                            if (notRegistered) {
+                                                if (displayName || email || password) {
+                                                    if (!email.includes('@')) {
+                                                        toast.error('Invalid E-mail ID', { id: 'email@Error' })
+                                                    }
+                                                    else if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+                                                        await createUserWithEmailAndPassword(email, password);
+                                                        await updateProfile({ displayName });
+                                                        await sendEmailVerification();
+                                                    } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+                                                        toast.error('Password Must Contain Minimum eight characters, at least one letter and one number', { id: 'passError' })
+                                                    }
+                                                } else {
+                                                    toast.error('Name, Email & password required', { id: 'inputError' })
+                                                }
+                                            }
+                                            //Perform as SignIN Button
+                                            else {
+                                                if (email || password) {
+                                                    if (!email.includes('@')) {
+                                                        toast.error('Invalid E-mail ID', { id: 'email@Error' })
+                                                    }
+                                                    else if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+                                                        signInWithEmailAndPassword(email, password);
+                                                    } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+                                                        toast.error('Password Must Contain Minimum eight characters, at least one letter and one number', { id: 'passError' })
+                                                    }
+                                                } else {
+                                                    toast.error('Name, Email & password required', { id: 'inputError' })
+                                                }
+                                            }
+                                        }}
+                                        type="button"
+                                        className={`inline-block px-7 py-3  text-white font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out ${notRegistered ? 'bg-green-600 focus:bg-green-700 hover:bg-green-700 active:bg-green-800' : 'bg-blue-600 focus:bg-blue-700 hover:bg-blue-700 active:bg-blue-800'}`}>
+                                        {notRegistered ? 'Sign up' : 'Login'}
+                                    </button>
+                                </div>
+                            </div>
                             {/* Social Login/SignUp */}
                             <div
                                 className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"

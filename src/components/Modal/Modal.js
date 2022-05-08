@@ -1,6 +1,7 @@
 import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import toast from 'react-hot-toast';
 import auth from '../../firebase.init';
 import Login from '../../Login/Login';
 
@@ -34,8 +35,11 @@ const Modal = () => {
                                         <img className='max-w-xs rounded-full hover:scale-110 transition duration-300 ease-out' src={user.photoURL} alt="" />
                                     </div>
                                     <h2>{user.email}</h2>
-                                    <h3 className={`${user.emailVerified?'text-green-500':'text-red-500'}`}>{user.emailVerified?'Email Verified':'Email Not Verified'}</h3>
-                                    <button onClick={() => signOut(auth)} type="button" className="px-6 mt-6 mb-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1" data-bs-dismiss="modal">Log Out</button>
+                                    <h3 className={`${user.emailVerified ? 'text-green-500' : 'text-red-500'}`}>{user.emailVerified ? 'Email Verified' : 'Email Not Verified'}</h3>
+                                    <button onClick={() => {
+                                        signOut(auth);
+                                        toast.success('Successfully Logged Out', { id: 'logout' });
+                                    }} type="button" className="px-6 mt-6 mb-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1" data-bs-dismiss="modal">Log Out</button>
                                 </div>}
                             </div>
                         </div>
