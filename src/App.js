@@ -11,6 +11,7 @@ import UpdateInventory from './components/UpdateInventory/UpdateInventory';
 import LoginUser from './components/LoginUser/LoginUser';
 import Login from './Login/Login';
 import MyItems from './components/MyItems/MyItems';
+import NoRoute404 from './components/NoRoute404/NoRoute404';
 const axios = require('axios');
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
         <Route path='/updateinventory/:id' element={<UpdateInventory></UpdateInventory>}>
         </Route>
         <Route path='/' element={<Home></Home>}>
+        </Route>
+        <Route path='/blogs' element={<Blog></Blog>}>
+        </Route>
+        <Route path='*' element={<NoRoute404></NoRoute404>}>
         </Route>
       </Routes>
       <Toaster />

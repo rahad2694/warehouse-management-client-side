@@ -52,12 +52,12 @@ const TopNav = () => {
                                 </path>
                             </svg>
                         </a>
-                        <ul className=" dropdown-menu min-w-max absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none right-9" aria-labelledby="dropdownMenuButton1">
+                        <ul className=" dropdown-menu min-w-max absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none right-9" aria-labelledby="dropdownMenuButton1">
                             <li className=" dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100">
-                                <NavLink to="/blogs" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Blogs</NavLink>
+                                <NavLink to="/blogs" className={({ isActive }) => (isActive) ? 'text-green-400' : ''}>Blogs</NavLink>
                             </li>
                             <li className=" dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100">
-                                <NavLink to="/contact" className={({ isActive }) => (isActive) ? 'text-white' : ''}>Contact Me</NavLink>
+                                <NavLink to="/contact" className={({ isActive }) => (isActive) ? 'text-green-400' : ''}>Contact Me</NavLink>
                             </li>
                         </ul>
                     </div>
