@@ -155,7 +155,7 @@ const Footer = () => {
                 </div>
                 <div className="text-center p-3 bg-gray-200">
                     <span>© 2022 Copyright: </span>
-                    <a className="text-gray-600 font-semibold" href="https://tailwind-elements.com/"> VitaPure</a>
+                    <a className="text-gray-600 font-semibold" href="https://vitapure-wms.web.app/"> VitaPure</a>
                 </div>
             </footer>
         </div>
