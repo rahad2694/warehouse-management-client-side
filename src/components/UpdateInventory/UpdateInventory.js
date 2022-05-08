@@ -113,9 +113,9 @@ const UpdateInventory = () => {
                     <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" defaultValue={itemDescription} placeholder='Item Description' {...register("itemDescription")} />
 
                     <div className='flex justify-start ml-1'>
-                        <label>Quantity:</label>
+                        <label>Stock Quantity: {itemQuantity}</label>
                     </div>
-                    <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" type="number" defaultValue={itemQuantity} placeholder='Item Quantity' {...register("itemQuantity", { pattern: /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/i })} />
+                    <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-3" type="number" defaultValue='' placeholder='New Quantity' {...register("itemQuantity", { pattern: /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/i })} />
 
                     <div className='flex justify-start ml-1'>
                         <label>Supplier:</label>

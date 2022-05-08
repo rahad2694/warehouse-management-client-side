@@ -9,7 +9,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        'light-purple': '#a77efe',
+        'custom-orange': '#FACC15',
       },
     }
   }
