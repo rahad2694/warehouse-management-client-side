@@ -11,36 +11,44 @@ const Table2 = () => {
                                 <thead className="bg-white border-b">
                                     <tr>
                                         <th scope="col" className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                        Authorization
+                                        SQL 
                                         </th>
                                         <th scope="col" className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                        Authentication
+                                        noSQL
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr className="bg-gray-100 border-b">
                                         <td className="text-sm text-gray-900 font-light px-6 py-4">
-                                        Authorization is the checking or allowance of any special power or access to the system.
+                                        SQL is an RDBMS which means "Relational Database Management System".
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                        Authentication is the checking of identity verification to gain entry or access.
+                                        NoSQL is a distributed or non-relational Database Management System.
                                         </td>
                                     </tr>
                                     <tr className="bg-white border-b">
                                         <td className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                        Authorization needs Authentication first to proceed.
+                                        SQL is only Vertically Scalable.
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                        Authentication is done and then comes the Authorization part.
+                                        NoSQL is both Vertically and Horizontally Scalable.
                                         </td>
                                     </tr>
                                     <tr className="bg-gray-100 border-b">
                                         <td className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                            Example to Authorization is the CRUD access or viewing, editing, deleting and creating access.
+                                            SQL has fixed or predefined schema which makes it static.
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4  ">
-                                            Example of Authentication is checking the login credentials to allow an user in.
+                                        NoSQL has no fixed or predefined schema which makes it dynamic.
+                                        </td>
+                                    </tr>
+                                    <tr className="bg-gray-100 border-b">
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4  ">
+                                            SQL is not the right choice for hierarchical data storage.
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4  ">
+                                        NoSQL is the perfect choice for hierarchical data storage.
                                         </td>
                                     </tr>
                                 </tbody>

@@ -40,17 +40,16 @@ const Blog = () => {
                     <h2 className="accordion-header mb-0" id="headingThree">
                         <button className=" accordion-button collapsed relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
                             aria-controls="collapseThree">
-                            When should you use nodejs and when should you use mongodb ?
+                            When should you use Nodejs and when should you use Mongodb ?
                         </button>
                     </h2>
                     <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample">
                         <div className="accordion-body py-4 px-5">
-                            Except <strong>authentication</strong>, Firebase provides so many robust cloud computing services. Some of these are :
-                            <div className='border-2 w-3/4 mx-auto py-3 mt-3 shadow-lg'>
-                                
-
-                            </div>
+                            <strong>Nodejs</strong> and <strong>Mongodb</strong> are two different technologies, NodeJS is a JavaScript runtime environment which helps us to perform backend activities or server side activities with JavaScript only. Whereas MongoDb is a NoSQL database system which permits us to store data on this database and perform CRUD operations as well as searching documents by some criteria.
+                            <br />
+                            <br />
+                            For example, If am going to perform like a MERN stack developer, I need to use both NodeJS and Mongodb together. Moreover, using both NodeJS and Mongodb will be a great help to perform any server side activities efficiently.
                         </div>
                     </div>
                 </div>
